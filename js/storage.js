@@ -83,8 +83,8 @@ const WW = {
   // ========== DEFAULT SUBCATEGORIES ==========
   defaultSubcategories: {
     necessary: ['Healthy groceries', 'Clothes', 'Electronics', 'Gas', 'WFH coffee', 'Gifts'],
-    indulgence: ['Books', 'Movie rental', 'Sports gear', 'Nice-to-have merchandise', 'Date night', 'Social meal/drinks'],
-    waste: ['Junk food', 'Fast food', 'Solo eating out', 'Chipotle', 'Nicotine', 'Alcohol']
+    indulgence: ['Books', 'Movie rental', 'Sports gear', 'Nice-to-have merchandise', 'Date night', 'Social meal/drinks', 'Chipotle'],
+    waste: ['Junk food', 'Fast food', 'Solo eating out', 'Nicotine', 'Alcohol']
   },
 
   // ========== HELPERS ==========
