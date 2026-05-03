@@ -82,7 +82,7 @@ const WW = {
 
   // ========== DEFAULT SUBCATEGORIES ==========
   defaultSubcategories: {
-    necessary: ['Healthy groceries', 'Clothes', 'Electronics', 'Gas', 'WFH coffee', 'Gifts'],
+    necessary: ['Healthy groceries', 'Clothes', 'Electronics', 'Gas', 'WFH coffee', 'Gifts', 'Work expense'],
     indulgence: ['Books', 'Movie rental', 'Sports gear', 'Nice-to-have merchandise', 'Date night', 'Social meal/drinks', 'Chipotle'],
     waste: ['Junk food', 'Fast food', 'Solo eating out', 'Nicotine', 'Alcohol']
   },
@@ -192,8 +192,8 @@ const WW = {
   },
 
   getWeekTotalSummary() {
-    // All categorized spending this week (waste + indulgence + necessary + ignore)
-    const all = this.getThisWeekTransactions();
+    // All categorized spending this week, except reimbursable work expenses
+    const all = this.getThisWeekTransactions().filter(t => t.subcategory !== 'Work expense');
     return {
       total: all.reduce((s, t) => s + t.amount, 0),
       count: all.length
