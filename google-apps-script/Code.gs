@@ -50,7 +50,9 @@ function isDuplicateQueue(merchant, amount, minutesWindow) {
   for (var i = 0; i < queue.length; i++) {
     var q = queue[i];
     var qTime = new Date(q.timestamp).getTime();
-    if (q.merchant.toLowerCase() === merchant.toLowerCase() &&
+    var qMerchant = String(q.merchant || '').toLowerCase();
+    var newMerchant = String(merchant || '').toLowerCase();
+    if (qMerchant === newMerchant &&
         parseFloat(q.amount) === parseFloat(amount) &&
         (now - qTime) < window) {
       return true;
