@@ -158,11 +158,24 @@ const App = {
 
     this.updateQueueBadge();
 
-    // If merchant is auto-ignored, handle it silently and move to next
-    if (WW.isIgnoredMerchant(next.merchant)) {
-      WW.addTransaction(next.merchant, next.amount, 'ignore', null);
+    // Defensive: validate queue item — skip + remove if malformed
+    const merchant = String(next.merchant || '').trim();
+    const amount = parseFloat(next.amount);
+    if (!merchant || isNaN(amount) || amount <= 0) {
+      console.warn('Skipping malformed queue item', next);
       WW.removeFromQueue(next.id);
-      Categorize.showUndoToast(`Auto-ignored: ${next.merchant} $${next.amount.toFixed(2)}`);
+      setTimeout(() => this.processQueue(), 200);
+      return;
+    }
+    // Normalize fields back to the queue object before passing on
+    next.merchant = merchant;
+    next.amount = amount;
+
+    // If merchant is auto-ignored, handle it silently and move to next
+    if (WW.isIgnoredMerchant(merchant)) {
+      WW.addTransaction(merchant, amount, 'ignore', null);
+      WW.removeFromQueue(next.id);
+      Categorize.showUndoToast(`Auto-ignored: ${merchant} $${amount.toFixed(2)}`);
       Widget.refresh();
       // Process next in queue after brief delay
       setTimeout(() => this.processQueue(), 500);
